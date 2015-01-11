@@ -1,0 +1,19 @@
+#!/bin/bash
+rm ~/.cache/wallpaper/*
+cd  
+#rm ./dodo.html
+wget --output-document=dodo.html http://www.bing.com
+rm ./dwallpaper.jpg
+wget --output-document=dwallpaper `sed -n "s/^.*g_img *= *{ *url:'\([^']*\)'.*$/\1/p" < dodo.html | sed 's/^&quot;\(.*\)&quot;$/\1/' | sed 's/^\/\(.*\)/http:\/\/www.bing.com\/\1/'`
+rm ./dodo.html
+sleep 5
+gsettings set org.gnome.desktop.background picture-uri 'file:///home/nitish/dwallpaper'
+echo "want to save the picture?"
+read answer
+if [ $answer == y ]
+	then
+		cp ~/dwallpaper ~/Pictures/Wallpapers/"`date`"
+	else
+		exit
+fi
+exit
